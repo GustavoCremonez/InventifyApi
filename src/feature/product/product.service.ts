@@ -15,4 +15,27 @@ export class ProductService {
     async get(): Promise<Array<Product>> {
         return this.prisma.product.findMany();
     }
+
+    async getById(where: Prisma.ProductWhereUniqueInput): Promise<Product> {
+        return this.prisma.product.findUnique({
+            where
+        })
+    }
+
+    async update(data: Prisma.ProductUpdateInput): Promise<Product> {
+        return this.prisma.product.update({
+            data,
+            where: {
+                id: data.id as string
+            }
+        });
+    }
+
+    async delete(id: string): Promise<Product> {
+        return this.prisma.product.delete({
+            where: {
+                id: id
+            }
+        })
+    }
 }
